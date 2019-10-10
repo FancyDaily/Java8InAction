@@ -1,0 +1,28 @@
+用流收集数据
+
+待补充...
+
+Collectors类的所有静态工厂方法
+
+    toList
+    toSet
+    toCollection
+    counting
+    summingInt
+    averagingInt
+    summarizingInt
+    joinging
+    maxBy
+    minBy
+    reducing
+    collectingAndThen
+    groupingBy
+    partitioningBy
+
+
+自定义Collector
+
+    实现Collector<T, A, R>接口
+    其中 T 是流中要收集的项目的泛型
+        A 是累加器的类型
+        R 是收集操作得到的对象类型
