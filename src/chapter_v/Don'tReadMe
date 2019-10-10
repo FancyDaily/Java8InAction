@@ -1,0 +1,28 @@
+流的使用
+
+1.筛选与切片
+
+    使用limit(i)来截断，获得前i个元素，
+    使用skip(i)来跳过，获得除前i个元素之外的元素，两者是互补的。
+    
+2.filter、map、flatMap、find、match、reduce
+
+
+3.免去装箱成本的数值流
+
+    eg.IntStream
+ 
+4.构建流
+
+    Stream.of、Array.stream、Files.lines(Paths.get(String),Charset)
+    无限流：
+    Stream.iterate、Stream.generate(无限流一般配合limit使用)
+ 
+5.无状态与并行化
+
+6.有状态操作与无状态操作总结
+
+    无状态:
+    filter、map
+    有状态:
+    reduce、sorted、distinct

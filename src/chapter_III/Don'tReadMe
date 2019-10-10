@@ -1,0 +1,76 @@
+1.函数式接口(Functional Interface)
+    
+    除默认方法外有且仅有一个抽象方法的接口
+ 
+2.所谓方法的签名
+
+    指参数列表与返回类型
+
+3.lambda与函数式接口的签名一致式可等同
+    
+    例如:Runnable接口的函数run(),其签名可表示为() -> void, 则诸如
+    () -> System.our.println("This is AWESOME!")的lambda可以与其等同
+    
+4.java8的function包下的几种函数式接口
+
+    常用
+    函数式接口名         函数描述符        举例
+    Predicate<T>      T -> boolean   过滤
+    Consumer<T>       T -> void      打印
+    Function<T, R>    T -> R         给一个String,得到长度
+    
+    其他
+    数式接口名           函数描述符        
+    Supplier<T>        () -> T  
+    UnaryOperator<T>   T -> T    
+    BinaryOperator<T>  (T,T) -> T 
+    BiPredicate<L,R>   (L,R) -> boolean
+    BiConsumer<T,U>    (T,U) -> void
+    BiFunction<T,U,R>  (T,U) -> R
+    
+    
+5.避免装箱的几个专门的版本
+
+    IntPredicate、DoublePredicate、IntConsumer、IntFunction等.
+
+6.此外还有针对输出参数类型的变种
+
+    ToIntFunction<T>、IntToDoubleFunction等.
+    
+7.方法引用
+
+    方法引用相当于仅涉及单一方法的lambda语法糖,等同于lambda表达式（单一方法）
+    分类：
+    1.指向静态方法的方法引用（例如Integer的parseInt方法）
+    2.指向任意类型实例方法的方法引用（例如String的length方法）
+    3.指向现有对象的实例方法的方法引用（方法的调用者是已经存在的一个外部对象）
+    
+8.构造函数的引用
+
+    根据构造函数参数列表不同，使用Supplier<T>、Function<T,R>、BiFunction<T,U,V,R>以至于是自定义函数式接口
+    来区分是引用何等参数个数的构造函数
+    
+9.lambda表达式的类型检查
+       
+    根据使用的上下文推断:
+    当前使用lambda表达式的方法声明的函数式接口类型(包括范型),
+    它的唯一抽象方法(也就是它的函数)的函数描述符 是否 与lambda表达式的签名一致.
+    (要注意：如果lambda抛出一个异常，则抽象方法所声明的throws语句也必须与之匹配.
+   
+10.lambda使用局部变量
+    
+    lambda引用的局部变量必须是最终的（被声明为final）或者实际上是最终的（未被声明为final实际上只赋值一次）
+    
+11.三种常用的复合lambda的方法
+
+    1.比较器复合：Comparator.comparing()之后 (倒序条件必须写在第一个 当两个条件前提下，筛选条件都使用流reversed，得到了与预期不同的结果。多个条件尚未验证)
+    .reversed() 倒序
+    .thenComparing() 继续比较
+    2.谓词复合: Predicate
+    .and()
+    .or()
+    .negate()
+    3.函数复合:Function
+    .andThen()  后执行作为参数的函数
+    .compose()  先执行作为参数的函数
+    
