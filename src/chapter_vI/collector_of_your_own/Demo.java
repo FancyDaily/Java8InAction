@@ -2,9 +2,13 @@ package chapter_vI.collector_of_your_own;
 
 import chapter_Iv.entity.Dish;
 import chapter_Iv.uitl.DishUtils;
+import chapter_v.fold_practice.Trader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * @Author: FangyiXu
@@ -25,5 +29,31 @@ public class Demo {
                         List::addAll    //compiner
                 );
         System.out.println(collect);
+
+        int candidate = 47;
+        Map<Boolean, List<Integer>> booleanListMap = IntStream.rangeClosed(2, 47).boxed()
+                .collect(new MyPartitioningByCollector());
+
+        System.out.println(booleanListMap);
+
+        System.out.println(System.nanoTime());
+
+        //同样直接把实现以lambda的形式传餐(完全的函数式编程！这是一个一次性的实现！可读性差，可重用性差。)
+        int n = 34;
+        HashMap<Boolean, List<Integer>> booleanListHashMap = IntStream.rangeClosed(2, n).boxed().collect(
+                () -> new HashMap<Boolean, List<Integer>>() {{
+                    put(true, new ArrayList<>());
+                    put(false, new ArrayList<>());
+                }},     //supplier
+                (HashMap<Boolean, List<Integer>> acc, Integer cand) -> {
+                    acc.get(MyPartitioningByCollector.isPrime(acc.get(true), cand))
+                            .add(cand);
+                },      //accumulator
+                (map1, map2) -> {
+                    map1.get(true).addAll(map2.get(true));
+                    map1.get(false).addAll(map2.get(false));
+                }       //combinder
+        );
+        System.out.println(booleanListHashMap);
     }
 }
